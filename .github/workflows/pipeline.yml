@@ -27,9 +27,9 @@ jobs:
       - name: test-e2e
         uses: cypress-io/github-action@v4
         with:
-          working-directory: frontend
+          project: ./frontend
           env: TEST_MONGODB_URI=${{ secrets.TEST_MONGODB_URI }},TEST_SECRET=${{ secrets.TEST_SECRET }}
-          start: cd ../ && npm run start-test
+          start: npm run start-test
           wait-on: http://localhost:3003
       - name: deploy
         if: ${{ github.event_name == 'push' }}

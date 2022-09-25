@@ -9,9 +9,12 @@
     "lint": "cd ./frontend && npm run eslint",
     "test-be": "cd ./backend && npm run test",
     "start-test": "cd ./backend && npm run test:cypress",
-    "test-e2e": "cd ./frontend && npm run cypress:run",
+    "test-e2e": "cypress run --project ./frontend",
     "start": "cd ./backend && npm run start"
   },
   "author": "Artem Tsarev",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^9.5.4"
+  }
 }
