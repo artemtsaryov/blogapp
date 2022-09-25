@@ -28,6 +28,7 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           project: ./frontend
+          working-directory: frontend
           env: TEST_MONGODB_URI=${{ secrets.TEST_MONGODB_URI }},TEST_SECRET=${{ secrets.TEST_SECRET }}
           start: npm run start-test
           wait-on: http://localhost:3003
