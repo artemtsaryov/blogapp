@@ -1,0 +1,38 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - name: install
+        run: npm install
+      - name: build
+        run: npm run build
+      - name: lint
+        run: npm run lint
+      - name: test-be
+        run: npm run test-be
+      - name: test-e2e
+        uses: cypress-io/github-action@v4
+        with:
+          project: ./frontend
+          start: npm run start-test
+          wait-on: http://localhost:3003
+      - name: deploy
+        if: ${{ github.event_name == 'push' }}
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "lit-shelf-37159"
+          heroku_email: "artyomtsaryov@gmail.com"
+          healthcheck: "https://lit-shelf-37159.herokuapp.com/health"
+          rollbackonhealthcheckfailed: true
